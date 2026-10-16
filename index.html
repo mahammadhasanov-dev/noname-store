@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NONAME &mdash; No Logo Streetwear</title>
+<style>
+:root {
+  --ink: #1b1b1b;
+  --paper: #f7f6f3;
+  --line: #e2e0da;
+  --muted: #6b6960;
+  --accent: #9c3b32;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); line-height: 1.5; }
+a { color: inherit; text-decoration: none; }
+
+header#site-header { position: sticky; top: 0; z-index: 10; background: var(--paper); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1100px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; }
+.logo { font-weight: 800; letter-spacing: 0.12em; font-size: 1.25rem; cursor: pointer; }
+.main-nav { display: flex; gap: 28px; align-items: center; font-weight: 500; }
+.main-nav a { cursor: pointer; }
+.main-nav a:hover { color: var(--accent); }
+.cart-link { display: inline-flex; align-items: center; gap: 6px; }
+.badge { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: var(--ink); color: var(--paper); font-size: 0.72rem; font-weight: 700; }
+
+footer#site-footer { border-top: 1px solid var(--line); margin-top: 60px; }
+.footer-inner { max-width: 1100px; margin: 0 auto; padding: 40px 24px 28px; color: var(--muted); font-size: 0.85rem; }
+.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; text-align: left; padding-bottom: 24px; }
+.footer-col p { margin: 4px 0; line-height: 1.6; }
+.footer-col a:hover { color: var(--accent); }
+.footer-heading { font-weight: 700; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.78rem; margin-bottom: 10px; }
+.footer-bottom { border-top: 1px solid var(--line); padding-top: 18px; text-align: center; font-size: 0.8rem; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+.btn { display: inline-block; border: none; cursor: pointer; background: var(--ink); color: var(--paper); padding: 14px 28px; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.04em; border-radius: 4px; transition: transform 0.15s ease, opacity 0.15s ease; }
+.btn:hover { opacity: 0.85; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-outline { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+
+.page { display: none; }
+.page.active { display: block; }
+
+.hero { display: flex; align-items: center; gap: 48px; padding: 72px 24px; max-width: 1100px; margin: 0 auto; flex-wrap: wrap; }
+.hero-copy { flex: 1 1 380px; }
+.hero-copy .eyebrow { text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.8rem; color: var(--muted); }
+.hero-copy h1 { font-size: 3rem; line-height: 1.05; margin: 12px 0 20px; }
+.hero-copy p { color: var(--muted); max-width: 40ch; margin-bottom: 28px; }
+.hero-shirt { flex: 1 1 320px; display: flex; justify-content: center; }
+.hero-shirt svg { width: 260px; filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.12)); }
+
+.strip { display: flex; justify-content: center; gap: 40px; padding: 20px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; flex-wrap: wrap; }
+
+.features { max-width: 1100px; margin: 0 auto; padding: 60px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; }
+.feature h3 { margin-bottom: 8px; }
+.feature p { color: var(--muted); font-size: 0.92rem; }
+
+.cta-band { text-align: center; padding: 60px 24px 90px; }
+.cta-band h2 { font-size: 1.8rem; margin-bottom: 20px; }
+
+.catalogue-heading { padding: 40px 24px 0; }
+.catalogue-heading h1 { margin: 0 0 8px; font-size: 2.2rem; }
+.catalogue-heading p { color: var(--muted); margin: 0; }
+
+.product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; padding: 32px 24px 0; max-width: 1100px; margin: 0 auto; }
+.product-card { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 20px 16px; cursor: pointer; font: inherit; }
+.product-card.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.product-card-preview { display: flex; justify-content: center; margin-bottom: 8px; }
+.product-card-preview svg { width: 120px; filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.1)); }
+.product-card-category { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.7rem; color: var(--muted); }
+.product-card-name { font-weight: 700; }
+.product-card-price { color: var(--muted); font-size: 0.9rem; }
+
+.product { display: flex; gap: 56px; padding: 56px 24px; max-width: 1100px; margin: 0 auto; flex-wrap: wrap; }
+.product-preview { flex: 1 1 320px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid var(--line); border-radius: 8px; min-height: 420px; }
+.product-preview svg { width: 260px; filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.1)); }
+.product-info { flex: 1 1 380px; }
+.product-info h1 { margin: 0 0 8px; font-size: 2rem; }
+.price { font-size: 1.4rem; font-weight: 700; margin-bottom: 20px; }
+.product-info > p { color: var(--muted); max-width: 50ch; margin-bottom: 28px; }
+.option-label { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; margin: 20px 0 10px; }
+.color-swatches { display: flex; gap: 12px; flex-wrap: wrap; }
+.swatch { width: 34px; height: 34px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15); }
+.swatch.selected { border-color: var(--accent); }
+.selected-color-name { margin-top: 8px; font-size: 0.85rem; color: var(--muted); }
+.size-options { display: flex; gap: 10px; flex-wrap: wrap; }
+.size-option { padding: 10px 16px; border: 1px solid var(--line); border-radius: 4px; cursor: pointer; background: #fff; font-weight: 600; }
+.size-option.selected { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.qty-row { display: flex; align-items: center; gap: 14px; }
+.qty-control { display: flex; align-items: center; border: 1px solid var(--line); border-radius: 4px; }
+.qty-control button { width: 36px; height: 36px; border: none; background: transparent; font-size: 1.1rem; cursor: pointer; }
+.qty-control input { width: 40px; text-align: center; border: none; font-size: 1rem; }
+.add-to-cart-row { margin-top: 30px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.toast { margin-top: 14px; font-size: 0.9rem; color: #2e7d32; display: none; }
+
+.checkout-layout { display: flex; gap: 56px; padding: 48px 24px 90px; max-width: 1100px; margin: 0 auto; flex-wrap: wrap; align-items: flex-start; }
+.checkout-summary, .checkout-payment { flex: 1 1 400px; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 28px; }
+.checkout-summary h2, .checkout-payment h2 { margin-top: 0; font-size: 1.2rem; }
+.cart-item { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.cart-item svg { width: 46px; }
+.cart-item-info { flex: 1; }
+.cart-item-info .meta { color: var(--muted); font-size: 0.82rem; }
+.cart-item-price { font-weight: 700; }
+.remove-link { color: var(--muted); font-size: 0.8rem; cursor: pointer; text-decoration: underline; }
+.summary-row { display: flex; justify-content: space-between; padding: 10px 0; font-size: 0.95rem; }
+.summary-row.total { font-weight: 700; font-size: 1.1rem; border-top: 1px solid var(--line); margin-top: 10px; padding-top: 16px; }
+.form-field { margin-bottom: 18px; }
+.form-field label { display: block; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.form-field input, #card-element { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 4px; background: #fff; font-size: 0.95rem; }
+.form-row { display: flex; gap: 14px; }
+.form-row .form-field { flex: 1; }
+#card-errors { color: #c0392b; font-size: 0.85rem; margin-top: 8px; min-height: 1.2em; }
+.pay-note { font-size: 0.78rem; color: var(--muted); margin-top: 16px; }
+#payment-success { display: none; text-align: center; padding: 60px 24px; }
+#payment-success h2 { font-size: 1.6rem; margin-bottom: 10px; }
+.empty-cart { text-align: center; padding: 60px 24px; color: var(--muted); }
+
+.trust-row { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 0.82rem; margin-bottom: 20px; }
+.trust-row svg { width: 15px; height: 15px; flex-shrink: 0; }
+.card-badges { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.card-badge { border: 1px solid var(--line); border-radius: 4px; padding: 3px 7px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.02em; color: var(--muted); background: #fff; }
+.agree-row { display: flex; align-items: flex-start; gap: 10px; margin: 18px 0; font-size: 0.82rem; color: var(--muted); }
+.agree-row input { margin-top: 3px; }
+.agree-row a { color: var(--ink); text-decoration: underline; cursor: pointer; }
+.business-note { font-size: 0.78rem; color: var(--muted); margin-top: 10px; }
+
+.policies-layout { display: flex; gap: 48px; max-width: 1100px; margin: 0 auto; padding: 48px 24px 90px; align-items: flex-start; flex-wrap: wrap; }
+.policies-nav { flex: 0 0 200px; position: sticky; top: 90px; display: flex; flex-direction: column; gap: 6px; }
+.policies-nav a { padding: 8px 12px; border-radius: 4px; font-size: 0.88rem; color: var(--muted); cursor: pointer; }
+.policies-nav a:hover { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+.policies-content { flex: 1 1 480px; min-width: 0; }
+.policy-disclaimer { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px; font-size: 0.85rem; color: var(--muted); margin-bottom: 32px; }
+.policy-section { margin-bottom: 48px; scroll-margin-top: 90px; }
+.policy-section h2 { font-size: 1.4rem; margin-bottom: 6px; }
+.policy-updated { font-size: 0.78rem; color: var(--muted); margin-bottom: 18px; }
+.policy-section h3 { font-size: 1rem; margin: 20px 0 8px; }
+.policy-section p, .policy-section li { color: var(--muted); font-size: 0.92rem; }
+.policy-section ul { padding-left: 20px; }
+.policy-section a { text-decoration: underline; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<header id="site-header">
+  <div class="header-inner">
+    <span class="logo" data-page="home">NONAME</span>
+    <nav class="main-nav">
+      <a data-page="home">Home</a>
+      <a data-page="catalogue">Catalogue</a>
+      <a data-page="checkout" class="cart-link">Cart <span class="badge" data-cart-badge>0</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section id="page-home" class="page active">
+    <div class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Four pieces. Zero logos.</div>
+        <h1>Wear the art, not the name.</h1>
+        <p>
+          Hand-drawn dragon and tiger prints on oversized and regular-fit tees, cargo pants
+          and a fitted blouse. No branding, no seasonal drops &mdash; just the pieces, from $64.99.
+        </p>
+        <a class="btn" data-page="catalogue">Shop the Collection</a>
+      </div>
+      <div class="hero-shirt" id="hero-shirt"></div>
+    </div>
+
+    <div class="strip">
+      <span>100% Cotton</span>
+      <span>Made to Order</span>
+      <span>Free Returns</span>
+      <span>From $64.99</span>
+    </div>
+
+    <section class="features">
+      <div class="feature">
+        <h3>Oversized &amp; Regular Fits</h3>
+        <p>Boxy drop-shoulder tees alongside true-to-size cuts &mdash; pick the silhouette you actually wear.</p>
+      </div>
+      <div class="feature">
+        <h3>Hand-Drawn Prints</h3>
+        <p>A dragon and a tiger, drawn once and printed everywhere. No logo, no wordmark &mdash; just the art.</p>
+      </div>
+      <div class="feature">
+        <h3>Four Pieces</h3>
+        <p>Two tees, cargo pants and a blouse, each in four or five colorways.</p>
+      </div>
+      <div class="feature">
+        <h3>Straightforward Pricing</h3>
+        <p>$64.99 for tees, $74.99 for pants and blouses. No markdowns, no upsells.</p>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <h2>Ready when you are.</h2>
+      <a class="btn btn-outline" data-page="catalogue">View Catalogue</a>
+    </section>
+  </section>
+
+  <section id="page-catalogue" class="page">
+    <div class="catalogue-heading container">
+      <h1>Catalogue</h1>
+      <p>Four pieces. No logos. Pick one to see colors and sizes.</p>
+    </div>
+
+    <div class="product-grid" id="product-grid"></div>
+
+    <section class="product" id="product-detail">
+      <div class="product-preview" id="product-preview"></div>
+
+      <div class="product-info">
+        <h1 id="product-name"></h1>
+        <div class="price" id="product-price"></div>
+        <p id="product-description"></p>
+
+        <div class="option-label">Color</div>
+        <div class="color-swatches" id="color-swatches"></div>
+        <div class="selected-color-name" id="selected-color-name"></div>
+
+        <div class="option-label">Size</div>
+        <div class="size-options" id="size-options"></div>
+
+        <div class="option-label">Quantity</div>
+        <div class="qty-row">
+          <div class="qty-control">
+            <button type="button" id="qty-minus" aria-label="Decrease quantity">&minus;</button>
+            <input type="text" id="qty-input" value="1" inputmode="numeric" />
+            <button type="button" id="qty-plus" aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+
+        <div class="add-to-cart-row">
+          <button class="btn" id="add-to-cart-btn">Add to Cart</button>
+          <a class="btn btn-outline" data-page="checkout">Go to Checkout</a>
+        </div>
+        <div class="toast" id="add-toast">Added to cart.</div>
+      </div>
+    </section>
+  </section>
+
+  <section id="page-checkout" class="page">
+    <div id="empty-cart" class="empty-cart" style="display:none">
+      <h2>Your cart is empty</h2>
+      <p>Add something from the catalogue before checking out.</p>
+      <a class="btn" data-page="catalogue">Go to Catalogue</a>
+    </div>
+
+    <div id="checkout-content" class="checkout-layout">
+      <section class="checkout-summary">
+        <h2>Order Summary</h2>
+        <div id="cart-items"></div>
+        <div class="summary-row"><span>Subtotal</span><span id="summary-subtotal">$0.00</span></div>
+        <div class="summary-row"><span>Shipping</span><span>Free</span></div>
+        <div class="summary-row total"><span>Total</span><span id="summary-total">$0.00</span></div>
+      </section>
+
+      <section class="checkout-payment">
+        <h2>Payment</h2>
+        <div class="trust-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="10" width="16" height="10" rx="2"></rect>
+            <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+          </svg>
+          <span>Secure checkout &mdash; encrypted and processed by Stripe</span>
+        </div>
+        <form id="payment-form">
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="you@example.com" required />
+          </div>
+          <div class="form-field">
+            <label for="name">Name on card</label>
+            <input type="text" id="name" placeholder="Jane Doe" required />
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="address">Shipping address</label>
+              <input type="text" id="address" placeholder="123 Main St" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="city">City</label>
+              <input type="text" id="city" placeholder="City" required />
+            </div>
+            <div class="form-field">
+              <label for="zip">ZIP</label>
+              <input type="text" id="zip" placeholder="00000" required />
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="card-element">Card</label>
+            <div id="card-element"></div>
+            <div id="card-errors" role="alert"></div>
+            <div class="card-badges">
+              <span class="card-badge">VISA</span>
+              <span class="card-badge">MASTERCARD</span>
+              <span class="card-badge">AMEX</span>
+              <span class="card-badge">DISCOVER</span>
+            </div>
+          </div>
+
+          <label class="agree-row">
+            <input type="checkbox" id="agree-terms" required />
+            <span>
+              I agree to the
+              <a data-page="policies" data-anchor="terms">Terms of Service</a>,
+              <a data-page="policies" data-anchor="privacy">Privacy Policy</a> and
+              <a data-page="policies" data-anchor="refund">Refund Policy</a>.
+            </span>
+          </label>
+
+          <button type="submit" class="btn" id="pay-button" style="width:100%">
+            Pay <span id="pay-amount">$0.00</span>
+          </button>
+          <p class="pay-note">
+            Payments are processed securely by Stripe. Use test card 4242 4242 4242 4242,
+            any future expiry date, and any CVC.
+          </p>
+          <p class="business-note" id="business-note"></p>
+        </form>
+      </section>
+    </div>
+
+    <div id="payment-success">
+      <h2>Thank you &mdash; your order is confirmed.</h2>
+      <p>A receipt has been sent to your email.</p>
+      <p class="business-note" id="success-business-note"></p>
+      <a class="btn btn-outline" data-page="catalogue">Continue Shopping</a>
+    </div>
+  </section>
+
+  <section id="page-policies" class="page">
+    <div class="policies-layout">
+      <nav class="policies-nav">
+        <a href="#refund">Refund &amp; Returns</a>
+        <a href="#shipping">Shipping</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#terms">Terms of Service</a>
+      </nav>
+
+      <div class="policies-content">
+        <div class="policy-disclaimer">
+          These policies are provided as general templates for <strong id="policy-business-name"></strong>
+          and are not legal advice. Have them reviewed by a qualified professional before relying on them
+          for your business.
+        </div>
+
+        <section class="policy-section" id="refund">
+          <h2>Refund &amp; Return Policy</h2>
+          <div class="policy-updated" id="updated-refund"></div>
+          <p>
+            We want you to be happy with anything you buy from us. If a piece isn't right, you can
+            return it within 30 days of the delivery date for a refund, subject to the conditions below.
+          </p>
+          <h3>Returns</h3>
+          <ul>
+            <li>Items must be unused, unworn, and unwashed, with tags attached and in their original packaging.</li>
+            <li>A receipt or proof of purchase (your order confirmation email) is required.</li>
+            <li>Returns must be requested within 30 days of the delivery date.</li>
+          </ul>
+          <h3>Non-returnable items</h3>
+          <p>
+            We can't accept returns on items that have been worn, washed, or altered; return requests
+            made more than 30 days after delivery; or items marked as final sale at checkout.
+          </p>
+          <h3>How to start a return</h3>
+          <p>
+            Email <a id="refund-email"></a> with your order number, the item(s), and the reason for the
+            return. We'll confirm your return is eligible and send instructions for sending it back.
+          </p>
+          <h3>Refunds</h3>
+          <p>
+            Once we receive and inspect your return, we'll let you know whether it's approved. Approved
+            refunds are issued to your original payment method via Stripe within 5&ndash;10 business days.
+            Original shipping charges are non-refundable, and return shipping costs are deducted from
+            your refund unless the item arrived defective, damaged, or incorrect.
+          </p>
+          <h3>Exchanges</h3>
+          <p>
+            If an item arrives damaged or defective, we'll exchange it for the same product at no extra
+            cost &mdash; just contact us within 7 days of delivery with a photo and your order number.
+          </p>
+          <h3>International returns</h3>
+          <p>
+            Customers outside Canada are responsible for return shipping costs and any customs fees
+            incurred when sending an item back to us.
+          </p>
+        </section>
+
+        <section class="policy-section" id="shipping">
+          <h2>Shipping Policy</h2>
+          <div class="policy-updated" id="updated-shipping"></div>
+          <p>Every order is made and packed by our small team before it ships.</p>
+          <h3>Processing time</h3>
+          <p>
+            Orders placed before 2:00 PM EST on a business day are processed within 1&ndash;2 business
+            days (Monday to Friday, excluding public holidays). Orders placed after the cutoff are
+            processed the next business day.
+          </p>
+          <h3>Delivery estimates</h3>
+          <ul>
+            <li>Canada: 3&ndash;5 business days after processing</li>
+            <li>United States: 5&ndash;8 business days after processing</li>
+            <li>International: 7&ndash;14 business days after processing</li>
+          </ul>
+          <p>These are estimates from our carrier, not guarantees, and don't include processing time.</p>
+          <h3>Shipping costs</h3>
+          <p>Standard shipping is free on every order, everywhere we ship.</p>
+          <h3>Customs &amp; duties</h3>
+          <p>
+            International orders may be subject to customs duties and import taxes charged by your
+            country on arrival. These charges are set by your local customs authority and are your
+            responsibility &mdash; we have no control over them or over customs delays.
+          </p>
+          <h3>Tracking &amp; issues</h3>
+          <p>
+            You'll get an order confirmation immediately and a tracking number by email once your order
+            ships. If something arrives damaged or incorrect, email <a id="shipping-email"></a> with
+            photos and your order number and we'll sort it out &mdash; we reply within 1&ndash;2 business
+            days.
+          </p>
+        </section>
+
+        <section class="policy-section" id="privacy">
+          <h2>Privacy Policy</h2>
+          <div class="policy-updated" id="updated-privacy"></div>
+          <p>
+            This policy explains what personal information <span id="privacy-legal-name"></span>
+            ("we", "us") collects when you shop with us and how we use it, in line with Canada's
+            Personal Information Protection and Electronic Documents Act (PIPEDA).
+          </p>
+          <h3>Information we collect</h3>
+          <ul>
+            <li>Contact and shipping details you give us at checkout: name, email, address.</li>
+            <li>
+              Payment information, entered directly into Stripe's secure card field and sent straight to
+              Stripe &mdash; we never see or store your full card number.
+            </li>
+            <li>Order details: what you bought, in what size/color, and for how much.</li>
+            <li>Cart contents, stored locally in your own browser (localStorage), never on our servers.</li>
+            <li>Basic device/usage information (like browser type) generated automatically by visiting the site.</li>
+          </ul>
+          <h3>How we use it</h3>
+          <ul>
+            <li>To process your order, take payment, and arrange shipping.</li>
+            <li>To send order and shipping updates and respond to support requests.</li>
+            <li>To meet our legal, tax, and accounting obligations.</li>
+          </ul>
+          <p>We don't use your information for targeted advertising, and we don't run marketing emails you haven't asked for.</p>
+          <h3>Sharing</h3>
+          <p>
+            We share information only with the service providers who need it to fulfil your order:
+            currently Stripe (payment processing) and our shipping carrier. Information you submit for
+            payment may be transmitted to and processed by Stripe in countries other than where you
+            reside, under Stripe's own privacy and security standards. We do not sell your personal
+            information.
+          </p>
+          <h3>Cookies &amp; local storage</h3>
+          <p>
+            The only browser storage we use is a cart saved in your device's localStorage so your bag
+            doesn't empty on refresh. We don't use third-party advertising or tracking cookies.
+          </p>
+          <h3>Your rights</h3>
+          <p>
+            You can ask us to access, correct, or delete the personal information we hold about you, or
+            to receive a copy of it, at any time by emailing <a id="privacy-email"></a>. This service
+            isn't directed at children, and we don't knowingly collect information from anyone under the
+            age of majority in their province or country.
+          </p>
+          <h3>Changes</h3>
+          <p>We may update this policy from time to time; the date at the top of this section reflects the latest revision.</p>
+        </section>
+
+        <section class="policy-section" id="terms">
+          <h2>Terms of Service</h2>
+          <div class="policy-updated" id="updated-terms"></div>
+          <p>
+            By browsing this site or placing an order with <span id="terms-legal-name"></span>, you agree
+            to the terms below. Please read them before ordering.
+          </p>
+          <h3>1. Products &amp; availability</h3>
+          <p>
+            We try to describe and display every product as accurately as possible, but colors may vary
+            slightly by screen. We may limit quantities, discontinue a product, or correct listing errors
+            (including pricing errors) at any time, even after an order is placed.
+          </p>
+          <h3>2. Pricing &amp; payment</h3>
+          <p>
+            Prices are listed in USD and may change without notice; the price charged is the one shown at
+            checkout at the time you pay. Prices don't include applicable taxes, duties, or customs fees,
+            which are the purchaser's responsibility. Payments are processed securely by Stripe; by
+            submitting your payment details, you authorize us to charge the total shown at checkout to
+            your chosen payment method and confirm you're authorized to use that method.
+          </p>
+          <h3>3. Order acceptance &amp; cancellation</h3>
+          <p>
+            Your order is an offer to buy; we accept it once payment is confirmed. We reserve the right
+            to refuse or cancel any order &mdash; for example for suspected fraud, pricing errors, or
+            stock issues &mdash; and will refund any amount already charged.
+          </p>
+          <h3>4. Shipping &amp; delivery</h3>
+          <p>
+            See our <a data-page="policies" data-anchor="shipping">Shipping Policy</a> for processing
+            times, delivery estimates, and customs handling. Risk of loss passes to you once an order is
+            handed to the carrier.
+          </p>
+          <h3>5. Intellectual property</h3>
+          <p>
+            All artwork, product designs, and site content are the property of
+            <span id="terms-legal-name-2"></span> and may not be reproduced or used commercially without
+            our written permission.
+          </p>
+          <h3>6. Prohibited uses</h3>
+          <p>
+            You agree not to use this site for any unlawful purpose, to attempt to interfere with its
+            normal operation, or to submit false or fraudulent order information.
+          </p>
+          <h3>7. Disclaimer of warranties</h3>
+          <p>
+            PRODUCTS ARE PROVIDED "AS IS" AND "AS AVAILABLE," WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR
+            IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT,
+            EXCEPT WHERE SUCH DISCLAIMERS ARE NOT PERMITTED BY LAW.
+          </p>
+          <h3>8. Limitation of liability</h3>
+          <p>
+            TO THE FULLEST EXTENT PERMITTED BY LAW, <span id="terms-legal-name-3"></span> WILL NOT BE
+            LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES ARISING FROM YOUR USE
+            OF THIS SITE OR PURCHASE OF OUR PRODUCTS. OUR TOTAL LIABILITY FOR ANY CLAIM RELATING TO AN
+            ORDER IS LIMITED TO THE AMOUNT YOU PAID FOR THAT ORDER.
+          </p>
+          <h3>9. Governing law</h3>
+          <p>
+            These terms are governed by the laws of the Province of Ontario and the federal laws of
+            Canada applicable in Ontario, without regard to conflict-of-law principles. You and we both
+            agree to the exclusive jurisdiction of the courts of Ontario for any dispute arising from
+            these terms.
+          </p>
+          <h3>10. Changes to these terms</h3>
+          <p>
+            We may update these terms from time to time; continuing to use the site or placing an order
+            after a change means you accept the updated terms.
+          </p>
+          <h3>11. Contact</h3>
+          <p>
+            Questions about these terms? Email <a id="terms-email"></a>.
+          </p>
+        </section>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-heading">NONAME</div>
+        <p id="footer-business-name"></p>
+        <p id="footer-business-number"></p>
+        <p><a id="footer-support-email" href="#"></a></p>
+        <p><a href="mailto:support@example.com" style="color: var(--muted);">Customer Support</a></p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-heading">Policies</div>
+        <p><a data-page="policies" data-anchor="refund">Refund &amp; Return Policy</a></p>
+        <p><a data-page="policies" data-anchor="shipping">Shipping Policy</a></p>
+        <p><a data-page="policies" data-anchor="privacy">Privacy Policy</a></p>
+        <p><a data-page="policies" data-anchor="terms">Terms of Service</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom" id="footer-year-line"></div>
+  </div>
+</footer>
+
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+const BUSINESS = {
+  brandName: 'NONAME',
+  legalName: 'NONAME',
+  supportEmail: 'support@example.com',
+  businessNumber: 'demo',
+  addressLine1: 'Portfolio demo',
+  addressLine2: 'Payments disabled',
+};
+
+function formatPrice(amount) {
+  return `$${amount.toFixed(2)}`;
+}
+
+function dragonMotif(ink, base) {
+  return `
+    <g stroke="${ink}" fill="${ink}">
+      <path d="M42,22 C18,30 15,55 40,61 C65,67 71,87 46,97 C29,103 27,115 46,123"
+            fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M17,39 L8,44 L19,51 Z"/>
+      <path d="M69,67 L80,71 L67,80 Z"/>
+      <path d="M25,101 L14,106 L27,113 Z"/>
+      <path d="M39,121 L46,134 L53,121 Z"/>
+      <path d="M20,10 L34,3 L47,10 L45,20 L34,25 L23,20 Z" stroke="none"/>
+      <path d="M32,6 C27,-5 18,-5 12,4" fill="none" stroke-width="3" stroke-linecap="round"/>
+      <path d="M21,20 L38,20 L34,31 L25,29 Z" stroke="none"/>
+      <path d="M17,16 C8,14 2,19 -2,27" fill="none" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="6" cy="33" r="3" stroke="none"/>
+      <path d="M6,25 C4,20 9,20 6,15" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="30" cy="12" r="2" fill="${base}" stroke="none"/>
+      <path d="M27,20 L31,20 L29,25 Z" fill="${base}" stroke="none"/>
+    </g>
+  `;
+}
+
+function tigerMotif(ink, base) {
+  return `
+    <g stroke="${ink}" fill="${ink}">
+      <path d="M20,30 C15,15 25,5 35,15 C45,5 55,5 65,15 C75,5 85,15 80,30
+               C90,45 85,65 65,75 C55,82 45,82 35,75 C15,65 10,45 20,30 Z"
+            stroke-width="2.5" stroke-linejoin="round"/>
+      <g stroke="${base}" stroke-width="2.5" stroke-linecap="round">
+        <path d="M30,22 L36,28"/>
+        <path d="M40,17 L46,23"/>
+        <path d="M54,17 L60,23"/>
+        <path d="M64,22 L70,28"/>
+        <path d="M27,46 L35,51"/>
+        <path d="M65,46 L73,51"/>
+      </g>
+      <ellipse cx="50" cy="62" rx="13" ry="9" fill="${base}" stroke="none"/>
+      <circle cx="38" cy="42" r="3.5" fill="${base}" stroke="none"/>
+      <circle cx="62" cy="42" r="3.5" fill="${base}" stroke="none"/>
+      <path d="M45,54 L55,54 L50,60 Z" stroke="none"/>
+      <circle cx="40" cy="64" r="1.4" stroke="none"/>
+      <circle cx="44" cy="68" r="1.4" stroke="none"/>
+      <circle cx="60" cy="64" r="1.4" stroke="none"/>
+      <circle cx="56" cy="68" r="1.4" stroke="none"/>
+    </g>
+  `;
+}
+
+function dragonTeeSVG(color) {
+  return `
+    <svg viewBox="0 0 220 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${color.name} No Name Dragon Tee">
+      <path d="M88,14 L100,2 C106,20 114,20 120,2 L132,14 L172,30 L180,74 L148,80 L148,230 L72,230 L72,80 L40,74 L48,30 Z"
+            fill="${color.hex}" stroke="${color.stroke}" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M100,2 C106,20 114,20 120,2" fill="none" stroke="${color.stroke}" stroke-width="2" opacity="0.5"/>
+      <path d="M72,80 L148,80" stroke="${color.shadow}" stroke-width="1" opacity="0.2"/>
+      <g transform="translate(70,96) scale(0.78)">
+        ${dragonMotif(color.print, color.hex)}
+      </g>
+    </svg>
+  `;
+}
+
+function tigerTeeSVG(color) {
+  return `
+    <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${color.name} No Name Tiger Tee">
+      <path d="M63,14 L82,2 C88,20 112,20 118,2 L137,14 L172,46 L146,72 L134,60 L134,205 L66,205 L66,60 L54,72 L28,46 Z"
+            fill="${color.hex}" stroke="${color.stroke}" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M82,2 C88,20 112,20 118,2" fill="none" stroke="${color.stroke}" stroke-width="2" opacity="0.5"/>
+      <path d="M66,60 L134,60" stroke="${color.shadow}" stroke-width="1" opacity="0.25"/>
+      <g transform="translate(66,70) scale(0.68)">
+        ${tigerMotif(color.print, color.hex)}
+      </g>
+    </svg>
+  `;
+}
+
+function cargoPantsSVG(color) {
+  return `
+    <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${color.name} No Name Cargo Pants">
+      <path d="M55,10 L45,250 L75,250 L100,100 L125,250 L155,250 L145,10 Z"
+            fill="${color.hex}" stroke="${color.stroke}" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M58,26 L142,26" stroke="${color.shadow}" stroke-width="1" opacity="0.3"/>
+      <path d="M48,150 L84,150 L82,160 L50,160 Z" fill="${color.shadow}" opacity="0.35"/>
+      <path d="M50,150 L82,150 L79,195 L53,195 Z" fill="none" stroke="${color.shadow}" stroke-width="1.5" opacity="0.5"/>
+      <circle cx="66" cy="155" r="2" fill="${color.shadow}" opacity="0.6"/>
+      <g transform="translate(58,163) scale(0.13)">
+        ${dragonMotif(color.print, color.hex)}
+      </g>
+    </svg>
+  `;
+}
+
+function blouseSVG(color) {
+  return `
+    <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${color.name} No Name Blouse">
+      <path d="M55,20 L100,50 L145,20 L150,55 L122,58 L128,120 L120,220 L80,220 L72,120 L78,58 L50,55 Z"
+            fill="${color.hex}" stroke="${color.stroke}" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M100,50 L100,220" stroke="${color.shadow}" stroke-width="1" opacity="0.2"/>
+      <g transform="translate(72,64) scale(0.26)">
+        ${dragonMotif(color.print, color.hex)}
+      </g>
+    </svg>
+  `;
+}
+
+const PRODUCTS = [
+  {
+    id: 'dragon-tee', name: 'No Name Dragon Tee', price: 64.99, category: 'Tees',
+    description: 'An oversized, boxy fit with dropped shoulders in heavyweight 100% cotton, printed with a hand-drawn dragon across the chest. Still no logo, no name — just the art.',
+    sizes: ['S', 'M', 'L', 'XL'], render: dragonTeeSVG,
+    colors: [
+      { name: 'Black', hex: '#1b1b1b', stroke: '#000000', shadow: '#000000', print: '#d3ac66' },
+      { name: 'White', hex: '#f7f6f3', stroke: '#c9c7c1', shadow: '#d8d6d0', print: '#1b1b1b' },
+      { name: 'Heather Gray', hex: '#9a978f', stroke: '#7d7a72', shadow: '#807d75', print: '#1b1b1b' },
+      { name: 'Navy', hex: '#222c42', stroke: '#141a29', shadow: '#141a29', print: '#d3ac66' },
+      { name: 'Brick Red', hex: '#9c3b32', stroke: '#712920', shadow: '#712920', print: '#f2ead9' },
+    ],
+  },
+  {
+    id: 'tiger-tee', name: 'No Name Tiger Tee', price: 64.99, category: 'Tees',
+    description: 'A regular, true-to-size fit in heavyweight 100% cotton, printed with a bold tiger crest across the chest. Same no-logo philosophy, sharper silhouette.',
+    sizes: ['S', 'M', 'L', 'XL'], render: tigerTeeSVG,
+    colors: [
+      { name: 'Black', hex: '#1b1b1b', stroke: '#000000', shadow: '#000000', print: '#f2ead9' },
+      { name: 'White', hex: '#f7f6f3', stroke: '#c9c7c1', shadow: '#d8d6d0', print: '#1b1b1b' },
+      { name: 'Olive', hex: '#5b6142', stroke: '#3f4530', shadow: '#3f4530', print: '#f2ead9' },
+      { name: 'Burnt Orange', hex: '#b5651d', stroke: '#8a4c15', shadow: '#8a4c15', print: '#1b1b1b' },
+      { name: 'Charcoal', hex: '#3a3a38', stroke: '#232322', shadow: '#232322', print: '#f2ead9' },
+    ],
+  },
+  {
+    id: 'cargo-pants', name: 'No Name Cargo Pants', price: 74.99, category: 'Pants',
+    description: 'Relaxed straight-leg cargo pants in brushed cotton twill, with a working side pocket and a tiny dragon patch stitched on the flap. No branding up front — just the cut.',
+    sizes: ['30', '32', '34', '36', '38'], render: cargoPantsSVG,
+    colors: [
+      { name: 'Black', hex: '#1b1b1b', stroke: '#000000', shadow: '#000000', print: '#d3ac66' },
+      { name: 'Khaki', hex: '#c9b896', stroke: '#a8987a', shadow: '#a8987a', print: '#1b1b1b' },
+      { name: 'Olive', hex: '#5b6142', stroke: '#3f4530', shadow: '#3f4530', print: '#f2ead9' },
+      { name: 'Charcoal', hex: '#3a3a38', stroke: '#232322', shadow: '#232322', print: '#f2ead9' },
+    ],
+  },
+  {
+    id: 'blouse', name: 'No Name Blouse', price: 74.99, category: 'Blouses',
+    description: 'A fitted, lightweight blouse with a soft V-neck and cap sleeves, finished with a small dragon emblem at the chest. Cut for movement, not for logos.',
+    sizes: ['XS', 'S', 'M', 'L', 'XL'], render: blouseSVG,
+    colors: [
+      { name: 'Ivory', hex: '#f2ead9', stroke: '#d8cdb5', shadow: '#d8cdb5', print: '#1b1b1b' },
+      { name: 'Blush', hex: '#d9a9a0', stroke: '#b98077', shadow: '#b98077', print: '#1b1b1b' },
+      { name: 'Sage', hex: '#8fa088', stroke: '#6d7d67', shadow: '#6d7d67', print: '#1b1b1b' },
+      { name: 'Black', hex: '#1b1b1b', stroke: '#000000', shadow: '#000000', print: '#d3ac66' },
+      { name: 'Terracotta', hex: '#a85a3c', stroke: '#7c4029', shadow: '#7c4029', print: '#f2ead9' },
+    ],
+  },
+];
+
+function findProduct(id) {
+  return PRODUCTS.find((p) => p.id === id) || PRODUCTS[0];
+}
+function findColorFor(product, colorName) {
+  return product.colors.find((c) => c.name === colorName) || product.colors[0];
+}
+
+const CART_KEY = 'noname_cart_v2';
+
+function getCart() {
+  try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+  catch (e) { return []; }
+}
+function saveCart(cart) {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  updateCartBadge();
+}
+function addToCart({ productId, color, size, qty }) {
+  const cart = getCart();
+  const existing = cart.find((item) => item.productId === productId && item.color === color && item.size === size);
+  if (existing) existing.qty += qty;
+  else cart.push({ productId, color, size, qty, price: findProduct(productId).price });
+  saveCart(cart);
+}
+function removeFromCart(index) {
+  const cart = getCart();
+  cart.splice(index, 1);
+  saveCart(cart);
+}
+function setQty(index, qty) {
+  const cart = getCart();
+  if (!cart[index]) return;
+  cart[index].qty = Math.max(1, qty);
+  saveCart(cart);
+}
+function clearCart() { saveCart([]); }
+function cartCount() { return getCart().reduce((sum, item) => sum + item.qty, 0); }
+function cartTotal() { return getCart().reduce((sum, item) => sum + item.qty * item.price, 0); }
+function updateCartBadge() {
+  document.querySelectorAll('[data-cart-badge]').forEach((el) => {
+    const count = cartCount();
+    el.textContent = count;
+    el.style.display = count > 0 ? 'inline-flex' : 'none';
+  });
+}
+
+function showPage(id, anchor) {
+  document.querySelectorAll('.page').forEach((p) => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (id === 'checkout') {
+    renderCheckoutSummary();
+    ensureStripeMounted();
+  }
+  if (anchor) {
+    const el = document.getElementById(anchor);
+    if (el) {
+      requestAnimationFrame(() => el.scrollIntoView({ block: 'start' }));
+      return;
+    }
+  }
+  window.scrollTo(0, 0);
+}
+document.addEventListener('click', (e) => {
+  const target = e.target.closest('[data-page]');
+  if (!target) return;
+  e.preventDefault();
+  showPage(target.dataset.page, target.dataset.anchor);
+});
+
+(function initCatalogue() {
+  let selectedProduct = PRODUCTS[0];
+  let selectedColor = selectedProduct.colors[0];
+  let selectedSize = selectedProduct.sizes[Math.floor(selectedProduct.sizes.length / 2)];
+
+  const gridEl = document.getElementById('product-grid');
+  const preview = document.getElementById('product-preview');
+  const swatchesEl = document.getElementById('color-swatches');
+  const colorNameEl = document.getElementById('selected-color-name');
+  const sizeEl = document.getElementById('size-options');
+  const qtyInput = document.getElementById('qty-input');
+  const toast = document.getElementById('add-toast');
+  const detailEl = document.getElementById('product-detail');
+
+  function renderGrid() {
+    gridEl.innerHTML = PRODUCTS.map((product) => `
+      <button type="button" class="product-card${product.id === selectedProduct.id ? ' selected' : ''}" data-id="${product.id}">
+        <span class="product-card-preview">${product.render(product.colors[0])}</span>
+        <span class="product-card-category">${product.category}</span>
+        <span class="product-card-name">${product.name}</span>
+        <span class="product-card-price">${formatPrice(product.price)}</span>
+      </button>
+    `).join('');
+    gridEl.querySelectorAll('.product-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        selectProduct(findProduct(card.dataset.id));
+        detailEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  }
+
+  function selectProduct(product) {
+    selectedProduct = product;
+    selectedColor = product.colors[0];
+    selectedSize = product.sizes[Math.floor(product.sizes.length / 2)];
+    qtyInput.value = 1;
+    renderGrid();
+    renderDetail();
+  }
+
+  function renderPreview() { preview.innerHTML = selectedProduct.render(selectedColor); }
+
+  function renderSwatches() {
+    swatchesEl.innerHTML = selectedProduct.colors.map((color, i) => `
+      <button type="button" class="swatch${color.name === selectedColor.name ? ' selected' : ''}"
+        style="background:${color.hex}" data-index="${i}" aria-label="${color.name}" title="${color.name}"></button>
+    `).join('');
+    colorNameEl.textContent = selectedColor.name;
+    swatchesEl.querySelectorAll('.swatch').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        selectedColor = selectedProduct.colors[Number(btn.dataset.index)];
+        renderSwatches();
+        renderPreview();
+      });
+    });
+  }
+
+  function renderSizes() {
+    sizeEl.innerHTML = selectedProduct.sizes.map((size) => `
+      <button type="button" class="size-option${size === selectedSize ? ' selected' : ''}" data-size="${size}">${size}</button>
+    `).join('');
+    sizeEl.querySelectorAll('.size-option').forEach((btn) => {
+      btn.addEventListener('click', () => { selectedSize = btn.dataset.size; renderSizes(); });
+    });
+  }
+
+  function renderDetail() {
+    document.getElementById('product-name').textContent = selectedProduct.name;
+    document.getElementById('product-price').textContent = formatPrice(selectedProduct.price);
+    document.getElementById('product-description').textContent = selectedProduct.description;
+    document.getElementById('add-to-cart-btn').textContent = `Add to Cart — ${formatPrice(selectedProduct.price)}`;
+    renderPreview();
+    renderSwatches();
+    renderSizes();
+  }
+
+  document.getElementById('qty-minus').addEventListener('click', () => {
+    qtyInput.value = Math.max(1, Number(qtyInput.value) - 1);
+  });
+  document.getElementById('qty-plus').addEventListener('click', () => {
+    qtyInput.value = Math.max(1, Number(qtyInput.value) + 1);
+  });
+  qtyInput.addEventListener('change', () => {
+    const val = parseInt(qtyInput.value, 10);
+    qtyInput.value = Number.isFinite(val) && val > 0 ? val : 1;
+  });
+
+  document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+    addToCart({ productId: selectedProduct.id, color: selectedColor.name, size: selectedSize, qty: Math.max(1, parseInt(qtyInput.value, 10) || 1) });
+    toast.style.display = 'block';
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(() => (toast.style.display = 'none'), 2200);
+  });
+
+  renderGrid();
+  renderDetail();
+})();
+
+const STRIPE_PUBLISHABLE_KEY = 'pk_test_REPLACE_WITH_YOUR_PUBLISHABLE_KEY';
+const API_BASE_URL = 'http://localhost:4242';
+
+function renderCheckoutSummary() {
+  const cart = getCart();
+  const itemsEl = document.getElementById('cart-items');
+  const emptyEl = document.getElementById('empty-cart');
+  const contentEl = document.getElementById('checkout-content');
+
+  if (cart.length === 0) {
+    emptyEl.style.display = 'block';
+    contentEl.style.display = 'none';
+    return false;
+  }
+  emptyEl.style.display = 'none';
+  contentEl.style.display = 'flex';
+
+  itemsEl.innerHTML = cart.map((item, index) => {
+    const product = findProduct(item.productId);
+    const color = findColorFor(product, item.color);
+    return `
+      <div class="cart-item">
+        ${product.render(color)}
+        <div class="cart-item-info">
+          <div>${product.name}</div>
+          <div class="meta">${item.color} &middot; Size ${item.size} &middot; Qty
+            <input type="number" min="1" value="${item.qty}" style="width:48px" data-qty-index="${index}" />
+          </div>
+          <span class="remove-link" data-remove-index="${index}">Remove</span>
+        </div>
+        <div class="cart-item-price">${formatPrice(item.qty * item.price)}</div>
+      </div>
+    `;
+  }).join('');
+
+  const subtotal = cartTotal();
+  document.getElementById('summary-subtotal').textContent = formatPrice(subtotal);
+  document.getElementById('summary-total').textContent = formatPrice(subtotal);
+  document.getElementById('pay-amount').textContent = formatPrice(subtotal);
+
+  itemsEl.querySelectorAll('[data-remove-index]').forEach((el) => {
+    el.addEventListener('click', () => { removeFromCart(Number(el.dataset.removeIndex)); renderCheckoutSummary(); });
+  });
+  itemsEl.querySelectorAll('[data-qty-index]').forEach((el) => {
+    el.addEventListener('change', () => {
+      setQty(Number(el.dataset.qtyIndex), Math.max(1, parseInt(el.value, 10) || 1));
+      renderCheckoutSummary();
+    });
+  });
+
+  return true;
+}
+
+let stripeCtx = null;
+function ensureStripeMounted() {
+  if (stripeCtx || typeof Stripe === 'undefined') return;
+  const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+  const elements = stripe.elements();
+  const cardElement = elements.create('card', {
+    style: {
+      base: { fontSize: '16px', color: '#1b1b1b', '::placeholder': { color: '#a3a196' } },
+      invalid: { color: '#c0392b' },
+    },
+  });
+  cardElement.mount('#card-element');
+  cardElement.on('change', (event) => {
+    document.getElementById('card-errors').textContent = event.error ? event.error.message : '';
+  });
+  stripeCtx = { stripe, cardElement };
+}
+
+function showPaymentSuccess() {
+  document.getElementById('checkout-content').style.display = 'none';
+  document.getElementById('payment-success').style.display = 'block';
+}
+
+document.getElementById('payment-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const errorsEl = document.getElementById('card-errors');
+  if (!stripeCtx) {
+    errorsEl.textContent = 'Stripe.js failed to load.';
+    return;
+  }
+
+  const payButton = document.getElementById('pay-button');
+  payButton.disabled = true;
+  payButton.textContent = 'Processing...';
+  errorsEl.textContent = '';
+
+  const { stripe, cardElement } = stripeCtx;
+  const cart = getCart();
+  const customer = {
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    address: document.getElementById('address').value,
+    city: document.getElementById('city').value,
+    postalCode: document.getElementById('zip').value,
+  };
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/create-payment-intent`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cart, customer }),
+    });
+    if (!response.ok) throw new Error('backend-unavailable');
+    const { clientSecret } = await response.json();
+
+    const result = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: cardElement,
+        billing_details: {
+          name: customer.name,
+          email: customer.email,
+          address: {
+            line1: customer.address,
+            city: customer.city,
+            postal_code: customer.postalCode,
+          },
+        },
+      },
+    });
+
+    if (result.error) {
+      errorsEl.textContent = result.error.message;
+      payButton.disabled = false;
+      payButton.textContent = `Pay ${formatPrice(cartTotal())}`;
+      return;
+    }
+    if (result.paymentIntent.status === 'succeeded') {
+      clearCart();
+      showPaymentSuccess();
+    }
+  } catch (err) {
+    errorsEl.textContent =
+      'Could not reach the payment server. This static demo file needs a small backend ' +
+      'to create Stripe PaymentIntents (the secret key can never live in browser code). ' +
+      'See the example server in the full project (server/server.js) and set API_BASE_URL ' +
+      'above to where it runs.';
+    payButton.disabled = false;
+    payButton.textContent = `Pay ${formatPrice(cartTotal())}`;
+  }
+});
+
+document.getElementById('hero-shirt').innerHTML = PRODUCTS[0].render(PRODUCTS[0].colors[0]);
+
+document.getElementById('footer-business-name').innerHTML =
+  `${BUSINESS.legalName}<br/>${BUSINESS.addressLine1}<br/>${BUSINESS.addressLine2}`;
+document.getElementById('footer-business-number').textContent = `Business No. ${BUSINESS.businessNumber}`;
+const footerSupportLink = document.getElementById('footer-support-email');
+footerSupportLink.textContent = BUSINESS.supportEmail;
+footerSupportLink.href = 'mailto:' + BUSINESS.supportEmail;
+document.getElementById('footer-year-line').textContent =
+  `© ${new Date().getFullYear()} ${BUSINESS.legalName}. No logo. No name. Just the tee.`;
+
+const noteEl = document.getElementById('business-note');
+if (noteEl) {
+  noteEl.textContent =
+    `${BUSINESS.legalName} (Business No. ${BUSINESS.businessNumber}) does not store your card ` +
+    `details. Questions about your order? ${BUSINESS.supportEmail}`;
+}
+const successNoteEl = document.getElementById('success-business-note');
+if (successNoteEl) {
+  successNoteEl.textContent = `Questions about your order? Contact us at ${BUSINESS.supportEmail}.`;
+}
+
+const today = new Date().toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+['refund', 'shipping', 'privacy', 'terms'].forEach((id) => {
+  const el = document.getElementById('updated-' + id);
+  if (el) el.textContent = 'Last updated: ' + today;
+});
+document.getElementById('policy-business-name').textContent = `${BUSINESS.legalName} (Business No. ${BUSINESS.businessNumber})`;
+document.querySelectorAll('#privacy-legal-name, #terms-legal-name, #terms-legal-name-2, #terms-legal-name-3').forEach((el) => (el.textContent = BUSINESS.legalName));
+document.querySelectorAll('#refund-email, #shipping-email, #privacy-email, #terms-email').forEach((el) => {
+  el.textContent = BUSINESS.supportEmail;
+  el.href = 'mailto:' + BUSINESS.supportEmail;
+});
+
+updateCartBadge();
+</script>
+</body>
+</html>
